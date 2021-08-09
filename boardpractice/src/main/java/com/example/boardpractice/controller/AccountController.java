@@ -20,11 +20,6 @@ public class AccountController {
         return "account/signin";
     }
 
-    @PostMapping("/signin")
-    public String login() {
-        return "redirect:/";
-    }
-
     @GetMapping("/register")
     public String register() {
         return "account/register";
