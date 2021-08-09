@@ -2,11 +2,14 @@ package com.example.boardpractice.controller;
 
 import com.example.boardpractice.model.Board;
 import com.example.boardpractice.repository.BoardRepository;
+import com.example.boardpractice.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -15,6 +18,9 @@ public class BoardController {
 
     @Autowired
     private BoardRepository repository;
+
+    @Autowired
+    private BoardValidator boardValidator;
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -35,7 +41,11 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String save(@ModelAttribute Board board) {
+    public String save(@Valid Board board, BindingResult bindingResult) {
+        boardValidator.validate(board, bindingResult);
+        if(bindingResult.hasErrors()) {
+            return "board/form";
+        }
         repository.save(board);
         return "redirect:/board/list";
     }

@@ -16,15 +16,24 @@
         <input type="hidden" th:field="*{id}">
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" th:field="*{name}">
+            <input type="text" class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" id="name" th:field="*{name}">
+            <div id="name-validation" class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                Please provide a valid Name.
+            </div>
         </div>
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" th:field="*{title}">
+            <input type="text" class="form-control" th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'" id="title" th:field="*{title}">
+            <div id="title-validation" class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                Please provide a valid Title.
+            </div>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content</label>
-            <textarea class="form-control" id="content" rows="3" th:field="*{content}"></textarea>
+            <textarea class="form-control" th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'" id="content" rows="3" th:field="*{content}"></textarea>
+            <div id="content-validation" class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">
+                Please provide a valid Content.
+            </div>
         </div>
         <div class="text-end">
             <a type="button" class="btn btn-primary" th:href="@{/board/list}">Back</a>
