@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head(title)">
     <!-- Required meta tags -->
@@ -32,6 +32,18 @@
                     <a class="nav-link" th:classappend="${menu == 'board'} ? 'active'" aria-current="page" href="#" th:href="@{/board/list}">Board</a>
                 </li>
             </ul>
+
+            <a class="btn btn-outline-success me-2" th:href="@{/account/signin}"
+               sec:authorize="!isAuthenticated()">Login</a>
+            <a class="btn btn-outline-success" th:href="@{/account/register}"
+               sec:authorize="!isAuthenticated()">Sign up</a>
+            <form class="d-flex" sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                <!--                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+                <span class="text-white mx-1 my-auto" sec:authentication="name">User</span>
+                <span class="text-white mx-1 my-auto" sec:authentication="principal.authorities">Authorization</span>
+                <button class="btn btn-outline-success" type="submit">Logout</button>
+            </form>
+
         </div>
     </div>
 </nav>
