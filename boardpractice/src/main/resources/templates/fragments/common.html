@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head(title)">
     <!-- Required meta tags -->
@@ -26,12 +26,21 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${menu == 'home'} ? 'active'" aria-current="page" href="#" th:href="@{/}">Home</a>
+                    <a class="nav-link" th:classappend="${menu == 'home'} ? 'active'" aria-current="page" href="#"
+                       th:href="@{/}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:classappend="${menu == 'board'} ? 'active'" aria-current="page" href="#" th:href="@{/board/list}">Board</a>
+                    <a class="nav-link" th:classappend="${menu == 'board'} ? 'active'" aria-current="page" href="#"
+                       th:href="@{/board/list}">Board</a>
                 </li>
             </ul>
+            <a class="btn btn-outline-success" th:href="@{/account/signin}" sec:authorize="!isAuthenticated()">Login</a>
+            <a class="btn btn-outline-success" th:href="@{/account/register}" sec:authorize="!isAuthenticated()">Register</a>
+            <span class="text-white mx-2" sec:authorize="isAuthenticated()" sec:authentication="name">User</span>
+            <span class="text-white mx-2" sec:authorize="isAuthenticated()" sec:authentication="principal.authorities">Authorization</span>
+            <form class="d-flex" th:action="@{/logout}" method="post">
+                <button class="btn btn-outline-success" sec:authorize="isAuthenticated()">Logout</button>
+            </form>
         </div>
     </div>
 </nav>
